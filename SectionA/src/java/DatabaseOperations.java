@@ -91,6 +91,23 @@ public class DatabaseOperations {
         }
     }
     
+    public boolean updateRecord(Student s)
+    {
+        try
+        {
+            getCon();
+            PreparedStatement ps = con.prepareStatement("update student set firstName = ? where  sno = ?;");
+            ps.setString(1, s.getFirstName());
+            ps.setInt(2, s.getId());
+            ps.execute();
+            return true;
+        }
+        catch(SQLException | ClassNotFoundException e)
+        {
+            return false;
+        }
+    }
+    
     public ArrayList<Student> getAllRecords()
     {
         ArrayList<Student> students = new ArrayList<Student>();

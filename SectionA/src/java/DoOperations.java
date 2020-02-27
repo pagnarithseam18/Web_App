@@ -118,6 +118,31 @@ public class DoOperations extends HttpServlet {
             RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
             rd.include(request, response);    
         }
+        
+        else if (option.equals("update")) 
+        {
+            int id = Integer.parseInt(request.getParameter("id"));
+            String firstName = request.getParameter("firstName");
+            student = new Student();
+            student.setFirstName(firstName);
+            student.setId(id);
+            DatabaseOperations obj = new DatabaseOperations();
+            PrintWriter pw=response.getWriter();
+            if(obj.updateRecord(student))
+            { 
+                pw.println("<script type=\"text/javascript\">");
+                pw.println("alert('SUCCESS!');");
+                pw.println("</script>");
+            }
+            else
+            {
+                pw.println("<script type=\"text/javascript\">");
+                pw.println("alert('FAILED!');");
+                pw.println("</script>");
+            }
+            RequestDispatcher rd=request.getRequestDispatcher("index.jsp");
+            rd.include(request, response);
+        }
         else if(option.equals("view"))
         {
             int id = Integer.parseInt(request.getParameter("id"));

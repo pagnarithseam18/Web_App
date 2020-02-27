@@ -20,7 +20,7 @@
             table, th, td
             {
                 border: 1px solid black;
-            }
+            }x
             </style>
         <script>
             function changeFunction(value)
@@ -84,10 +84,9 @@
                     inputId.setAttribute("id", "id");
                     form.appendChild(inputId);
                     inputSubmit.setAttribute("type", "submit");
-                    inputSubmit.setAttribute("value", "Submit");
+                    inputSubmit.setAttribute("value", "Delete Record");
                     form.appendChild(inputSubmit);
                     inputHidden.setAttribute("type", "hidden");
-                    inputHidden.setAttribute("id", "option");
                     inputHidden.setAttribute("name", "option");
                     inputHidden.setAttribute("value", value);
                     form.appendChild(inputHidden);
@@ -96,6 +95,33 @@
                     main.appendChild(form);
                     
                 }
+                
+                else if(value == "update")
+                {
+                    const form = document.createElement("form");
+                    const inputId = document.createElement("input");
+                    const inputName = document.createElement("input");
+                    const inputSubmit = document.createElement("input");
+                    const inputHidden = document.createElement("input");
+                    inputId.setAttribute("type", "text");
+                    inputId.setAttribute("name", "id");
+                    inputName.setAttribute("type", "text");
+                    inputName.setAttribute("name", "firstName");
+                    inputSubmit.setAttribute("type", "submit");
+                    inputSubmit.setAttribute("value", "Update Record");
+                    inputHidden.setAttribute("type", "hidden");
+                    inputHidden.setAttribute("id", "option");
+                    inputHidden.setAttribute("name", "option");
+                    inputHidden.setAttribute("value", value);
+                    form.appendChild(inputId);
+                    form.appendChild(inputName);
+                    form.appendChild(inputSubmit);
+                    form.appendChild(inputHidden);
+                    form.setAttribute("method", "POST");
+                    form.setAttribute("action", "DoOperations");
+                    main.appendChild(form);
+                }
+                
                 else if(value == "viewall")
                 {
                     const form = document.createElement("form");
@@ -130,9 +156,9 @@
                         document.getElementById("tablecontainer").innerHTML = xmlhttp.responseText;  
                     }
                 };
-                if(document.getElementById("options").value == "view")
+                if(document.getElementById("option").value == "view")
                     var params = "id=" + document.getElementById("id").value + "&option=" + document.getElementById("option").value;
-                else if(document.getElementById("options").value == "viewall")
+                else if(document.getElementById("option").value == "viewall")
                     var params = "option=" + document.getElementById("option").value;
                 xmlhttp.open("POST", "/SectionA/DoOperations", true);
                 xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
@@ -150,6 +176,11 @@
             <option value="delete">Delete Record</option>
             <option value="viewall">View All Records</option>
         </select>
+        <button onClick="changeFunction('insert')">Insert Record</button>
+        <button onClick="changeFunction('view')">View Record</button>
+        <button onClick="changeFunction('update')">Update Record</button>
+        <button onClick="changeFunction('delete')">Delete Record</button>
+        <button onClick="changeFunction('viewall')">View All Records</button>
         <div id="main"></div>
         <div class="tablecontainer" id="tablecontainer">J</div>
     </body>
